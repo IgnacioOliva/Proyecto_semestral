@@ -1,17 +1,31 @@
-import React from 'react';
+import React from "react";
 
 export default function TarjetaProducto({ producto, onAgregar }) {
-  const { codigo, nombre, categoria, marca, modelo, stock, precio, descripcion, imagen } = producto;
+  const {
+    codigo,
+    nombre,
+    categoria,
+    marca,
+    modelo,
+    stock,
+    precio,
+    descripcion,
+    imagen,
+  } = producto;
 
   return (
     <div className="col-12 col-md-6 col-lg-4 col-xl-3">
       <div className="card h-100 shadow-sm border-0 producto-card position-relative">
-        <span 
+        <span
           className={`position-absolute top-0 end-0 m-2 badge ${
-            stock > 3 ? 'bg-success' : stock > 0 ? 'bg-warning text-dark' : 'bg-danger'
+            stock > 3
+              ? "bg-success"
+              : stock > 0
+                ? "bg-warning text-dark"
+                : "bg-danger"
           }`}
         >
-          {stock > 0 ? `Stock: ${stock}` : 'Agotado'}
+          {stock > 0 ? `Stock: ${stock}` : "Agotado"}
         </span>
 
         <div className="card-img-top-container">
@@ -32,7 +46,9 @@ export default function TarjetaProducto({ producto, onAgregar }) {
           </div>
 
           <h5 className="card-title text-dark fw-bold fs-6 mb-1">{nombre}</h5>
-          <p className="text-muted small mb-2">{modelo} · <span className="fw-semibold">Cód: {codigo}</span></p>
+          <p className="text-muted small mb-2">
+            {modelo} · <span className="fw-semibold">Cód: {codigo}</span>
+          </p>
 
           <p className="card-text text-secondary small flex-grow-1">
             {descripcion}
@@ -40,7 +56,7 @@ export default function TarjetaProducto({ producto, onAgregar }) {
 
           <div className="d-flex align-items-center justify-content-between mt-3 pt-2 border-top">
             <span className="fs-5 fw-bold text-primary">
-              ${precio.toLocaleString('es-CL')}
+              ${precio.toLocaleString("es-CL")}
             </span>
             <button
               className="btn btn-dark btn-sm rounded-pill px-3"

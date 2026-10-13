@@ -5,12 +5,11 @@
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   background-color: #f8f9fa;
-  overflow-x: hidden; /* Cero desbordamiento horizontal en móvil (≥ 360px) */
+  overflow-x: hidden;
 }
 
-/* Ajustes de imágenes adaptables */
 .card-img-top-container {
   height: 200px;
   background-color: #ffffff;
@@ -27,9 +26,10 @@ body {
   object-fit: contain;
 }
 
-/* Transición suave para tarjetas de producto */
 .producto-card {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition:
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
 }
 
 .producto-card:hover {
@@ -37,7 +37,6 @@ body {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Botones full-width para pantalla móvil táctil */
 @media (max-width: 575.98px) {
   .btn-mobile-full {
     width: 100%;
@@ -45,7 +44,6 @@ body {
   }
 }
 
-/* Formularios académicos (Login / Contacto) */
 .form-card,
 .panel {
   max-width: 560px;

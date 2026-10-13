@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
-import Buscador from '../components/Buscador';
-import ListaProductos from '../components/ListaProductos';
+import React, { useState, useMemo } from "react";
+import Buscador from "../components/Buscador";
+import ListaProductos from "../components/ListaProductos";
 
 export default function CatalogoPage({ productos, onAgregar }) {
-  const [busqueda, setBusqueda] = useState('');
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('Todas');
+  const [busqueda, setBusqueda] = useState("");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
   const categorias = useMemo(() => {
     const cats = new Set(productos.map((p) => p.categoria));
@@ -20,7 +20,8 @@ export default function CatalogoPage({ productos, onAgregar }) {
         producto.codigo.toLowerCase().includes(busqueda.toLowerCase());
 
       const coincideCategoria =
-        categoriaSeleccionada === 'Todas' || producto.categoria === categoriaSeleccionada;
+        categoriaSeleccionada === "Todas" ||
+        producto.categoria === categoriaSeleccionada;
 
       return coincideTexto && coincideCategoria;
     });
@@ -54,4 +55,3 @@ export default function CatalogoPage({ productos, onAgregar }) {
     </div>
   );
 }
-
