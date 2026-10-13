@@ -59,7 +59,7 @@ export default function TarjetaProducto({ producto, onAgregar }) {
               ${precio.toLocaleString("es-CL")}
             </span>
             <button
-              className="btn btn-dark btn-sm rounded-pill px-3"
+              className="btn btn-sv btn-sm rounded-pill px-3"
               onClick={() => onAgregar(producto)}
               disabled={stock === 0}
             >

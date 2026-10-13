@@ -28,7 +28,7 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
             <p className="mb-1"><strong>Modalidad:</strong> {tipoEntrega === 'retiro' ? 'Retiro en Tienda (Arlegui #450, Viña del Mar)' : 'Despacho por Starken/Chilexpress'}</p>
             <p className="mb-0"><strong>Estado:</strong> En Preparación</p>
           </div>
-          <Link to="/catalogo" className="btn btn-warning fw-bold px-4 py-2">
+          <Link to="/catalogo" className="btn btn-sv px-4 py-2">
             Volver al Catálogo
           </Link>
         </div>
@@ -43,7 +43,7 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
           <i className="bi bi-cart-x display-1 text-muted mb-3"></i>
           <h3 className="fw-bold">Tu carrito está vacío</h3>
           <p className="text-muted mb-4">Aún no has agregado instrumentos o accesorios a tu pedido.</p>
-          <Link to="/catalogo" className="btn btn-warning fw-bold px-4">
+          <Link to="/catalogo" className="btn btn-sv px-4">
             Explorar Catálogo
           </Link>
         </div>
@@ -54,7 +54,7 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
   return (
     <div className="container py-4">
       <h2 className="fw-bold text-dark mb-4">
-        <i className="bi bi-cart3 me-2 text-warning"></i>Tu Carrito de Compras
+        <i className="bi bi-cart3 me-2 acento"></i>Tu Carrito de Compras
       </h2>
 
       <div className="row g-4">
@@ -216,7 +216,7 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
                 />
               </div>
 
-              <button type="submit" className="btn btn-warning fw-bold w-100 py-2">
+              <button type="submit" className="btn btn-sv w-100 py-2">
                 <i className="bi bi-bag-check-fill me-2"></i>Confirmar Pedido
               </button>
             </form>

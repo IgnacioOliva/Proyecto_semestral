@@ -37,7 +37,7 @@ export default function CatalogoPage({ productos, onAgregar }) {
           </p>
         </div>
         <div className="mt-2 mt-md-0">
-          <span className="badge bg-primary fs-6 px-3 py-2">
+          <span className="badge badge-suave fs-6 px-3 py-2">
             {productosFiltrados.length} productos disponibles
           </span>
         </div>

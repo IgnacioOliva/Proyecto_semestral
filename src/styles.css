@@ -1,13 +1,155 @@
-/* Estilos globales y reglas de adaptabilidad para Sonido Vivo */
+/* Paleta verde claro de Sonido Vivo */
 :root {
-  --primary-color: #0d6efd;
-  --dark-bg: #121212;
+  --sv-bg: #f2faf3;
+  --sv-ink: #163126;
+  --sv-muted: #3d5c4a;
+  --sv-green: #1f7a46;
+  --sv-green-deep: #145c34;
+  --sv-green-soft: #d9f2e1;
+  --sv-header: #e7f6eb;
+  --sv-line: #c3dfcc;
+  --bs-primary: #1f7a46;
+  --bs-primary-rgb: 31, 122, 70;
+  --bs-body-bg: #f2faf3;
+  --bs-body-color: #163126;
+  --bs-secondary-color: #3d5c4a;
+  --bs-link-color: #145c34;
+  --bs-link-hover-color: #0e3d23;
+  --bs-border-color: #c3dfcc;
 }
 
 body {
   font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-  background-color: #f8f9fa;
+  background-color: var(--sv-bg);
+  color: var(--sv-ink);
   overflow-x: hidden;
+}
+
+.bg-light {
+  background-color: var(--sv-bg) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-dark {
+  color: var(--sv-ink) !important;
+}
+
+.text-muted,
+.text-secondary {
+  color: var(--sv-muted) !important;
+}
+
+.text-primary {
+  color: var(--sv-green-deep) !important;
+}
+
+.site-header {
+  background: var(--sv-header);
+  border-bottom: 1px solid var(--sv-line);
+}
+
+.site-header .navbar-brand,
+.site-header .nav-link {
+  color: var(--sv-green-deep);
+}
+
+.site-header .nav-link:hover,
+.site-header .nav-link:focus,
+.site-header .nav-link.active {
+  color: var(--sv-green);
+}
+
+.site-header .navbar-toggler {
+  border-color: var(--sv-green-deep);
+}
+
+.btn-sv {
+  background: var(--sv-green);
+  border: 1px solid var(--sv-green);
+  color: #fff;
+  font-weight: 700;
+}
+
+.btn-sv:hover,
+.btn-sv:focus {
+  background: var(--sv-green-deep);
+  border-color: var(--sv-green-deep);
+  color: #fff;
+}
+
+.btn-sv-outline {
+  background: transparent;
+  border: 1px solid var(--sv-green-deep);
+  color: var(--sv-green-deep);
+  font-weight: 600;
+}
+
+.btn-sv-outline:hover,
+.btn-sv-outline:focus {
+  background: var(--sv-green);
+  border-color: var(--sv-green);
+  color: #fff;
+}
+
+.hero-sv {
+  background: linear-gradient(160deg, #eef8f1 0%, #cfead8 100%);
+  color: var(--sv-ink);
+}
+
+.hero-sv .lead,
+.hero-panel {
+  color: var(--sv-muted);
+}
+
+.hero-panel {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--sv-line);
+}
+
+.hero-kicker,
+.acento {
+  color: var(--sv-green-deep) !important;
+}
+
+.site-footer {
+  background: #e3f4e8;
+  color: var(--sv-ink);
+  border-top: 1px solid var(--sv-line);
+}
+
+.site-footer h5,
+.site-footer h6,
+.site-footer .marca {
+  color: var(--sv-green-deep) !important;
+}
+
+.badge-suave {
+  background: var(--sv-green-soft);
+  color: var(--sv-green-deep);
+  border: 1px solid var(--sv-line);
+}
+
+.encabezado-suave {
+  background: var(--sv-green-soft);
+  color: var(--sv-green-deep);
+  border-bottom: 1px solid var(--sv-line);
+}
+
+.tabla-verde th {
+  background: var(--sv-green-deep);
+  color: #fff;
+  border-color: var(--sv-green-deep);
+}
+
+.alerta-suave {
+  background: #e7f6eb;
+  color: var(--sv-green-deep);
+  border: 1px solid var(--sv-line);
 }
 
 .card-img-top-container {
@@ -68,17 +210,23 @@ body {
 .form-group textarea {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--sv-line);
   border-radius: 0.375rem;
+  background: #fff;
+  color: var(--sv-ink);
 }
 
 button.primary {
-  background: #ffc107;
+  background: var(--sv-green);
   border: 0;
-  color: #212529;
+  color: #fff;
   font-weight: 700;
   padding: 0.55rem 1.25rem;
   border-radius: 0.375rem;
+}
+
+button.primary:hover {
+  background: var(--sv-green-deep);
 }
 
 .mensaje {
@@ -105,7 +253,8 @@ button.primary {
 }
 
 .kpi {
-  background: #f8f9fa;
+  background: var(--sv-green-soft);
+  color: var(--sv-green-deep);
   border-radius: 0.5rem;
   padding: 1rem;
   text-align: center;

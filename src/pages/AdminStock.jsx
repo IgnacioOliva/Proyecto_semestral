@@ -28,7 +28,7 @@ export default function AdminPage({ productos, onActualizarStock }) {
       <div className="card shadow-sm border-0">
         <div className="table-responsive">
           <table className="table table-hover align-middle mb-0">
-            <thead className="table-dark">
+            <thead className="tabla-verde">
               <tr>
                 <th>Código</th>
                 <th>Producto</th>

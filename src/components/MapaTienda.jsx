@@ -3,9 +3,9 @@ import React from 'react';
 export default function MapaTienda() {
   return (
     <div className="card shadow-sm border-0 overflow-hidden mb-4">
-      <div className="card-header bg-dark text-white d-flex align-items-center justify-content-between py-3">
+      <div className="card-header encabezado-suave d-flex align-items-center justify-content-between py-3">
         <h5 className="mb-0 fw-bold">
-          <i className="bi bi-geo-alt-fill text-warning me-2"></i>Ubicación y Puntos de Retiro
+          <i className="bi bi-geo-alt-fill acento me-2"></i>Ubicación y Puntos de Retiro
         </h5>
         <span className="badge bg-success">Tienda Física Abierta</span>
       </div>
@@ -17,7 +17,7 @@ export default function MapaTienda() {
             <p className="text-muted small mb-3">
               Muestra la ubicación céntrica de Sonido Vivo y los puntos de entrega asociados en la V Región.
             </p>
-            <div className="alert alert-info py-2 px-3 small border-0 mb-0">
+            <div className="alert alerta-suave py-2 px-3 small mb-0">
               <i className="bi bi-info-circle me-1"></i>
               Integración preparada para API de Google Maps / Leaflet (Parcial 3)
             </div>

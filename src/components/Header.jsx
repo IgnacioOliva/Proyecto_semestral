@@ -3,10 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 
 export default function Header({ cantidadCarrito }) {
   return (
-    <header className="sticky-top bg-dark navbar-dark shadow-sm">
+    <header className="site-header sticky-top shadow-sm">
       <nav className="navbar navbar-expand-md container">
         <Link
-          className="navbar-brand d-flex align-items-center fw-bold fs-4 text-warning"
+          className="navbar-brand d-flex align-items-center fw-bold fs-4"
           to="/"
         >
           <i className="bi bi-music-note-beamed me-2"></i>
@@ -31,7 +31,7 @@ export default function Header({ cantidadCarrito }) {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold text-white" : ""}`
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
                 }
                 end
               >
@@ -42,7 +42,7 @@ export default function Header({ cantidadCarrito }) {
               <NavLink
                 to="/catalogo"
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold text-white" : ""}`
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
                 }
               >
                 <i className="bi bi-grid-3x3-gap me-1"></i> Catálogo
@@ -52,7 +52,7 @@ export default function Header({ cantidadCarrito }) {
               <NavLink
                 to="/ubicacion"
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold text-white" : ""}`
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
                 }
               >
                 <i className="bi bi-geo-alt me-1"></i> Tienda Viña
@@ -62,7 +62,7 @@ export default function Header({ cantidadCarrito }) {
               <NavLink
                 to="/contacto"
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold text-white" : ""}`
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
                 }
               >
                 <i className="bi bi-envelope me-1"></i> Contacto
@@ -72,7 +72,7 @@ export default function Header({ cantidadCarrito }) {
               <NavLink
                 to="/admin"
                 className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold text-white" : ""}`
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
                 }
               >
                 <i className="bi bi-shield-lock me-1"></i> Gestión Stock
@@ -83,7 +83,7 @@ export default function Header({ cantidadCarrito }) {
           <div className="d-flex align-items-center mt-2 mt-md-0">
             <Link
               to="/carrito"
-              className="btn btn-outline-warning position-relative w-100 w-md-auto"
+              className="btn btn-sv-outline position-relative w-100 w-md-auto"
             >
               <i className="bi bi-cart3 me-1"></i> Carrito
               {cantidadCarrito > 0 && (
