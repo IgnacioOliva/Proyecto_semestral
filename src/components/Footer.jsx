@@ -19,7 +19,6 @@ export default function Footer() {
               #450, Viña del Mar
             </p>
           </div>
-
           <div className="col-12 col-md-4">
             <h6 className="fw-bold mb-3">Horario y Atención</h6>
             <ul className="list-unstyled small">
@@ -42,15 +41,13 @@ export default function Footer() {
           </div>
 
           <div className="col-12 col-md-4">
-            <h6 className="fw-bold mb-3">Plataforma Académica</h6>
+            <h6 className="fw-bold mb-3">Tu puedes ser parte de nosotros</h6>
             <p className="small">
-              Proyecto Fullstack II (DSY1104) · React + Vite + Bootstrap.
+              Estamos buscando nuevos talentos para unirse a nuestro equipo. Si te interesa, puedes contactarnos a través de nuestro formulario de contacto.
             </p>
-            <div className="d-flex gap-2 flex-wrap">
-              <span className="badge badge-suave">Móvil ≥ 360px</span>
-              <span className="badge badge-suave">Tablet ≥ 768px</span>
-              <span className="badge badge-suave">Desktop ≥ 1280px</span>
-            </div>
+            <a href="https://www.google.com" className="btn btn-primary">
+              <i className="bi bi-person-plus me-2"></i> Contactar
+            </a>
           </div>
         </div>
 

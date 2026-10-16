@@ -51,6 +51,7 @@ h6,
 .site-header {
   background: var(--sv-header);
   border-bottom: 1px solid var(--sv-line);
+  z-index: 1030;
 }
 
 .site-header .navbar-brand,
@@ -117,9 +118,16 @@ h6,
 }
 
 .site-footer {
+  position: relative;
+  z-index: 1020;
   background: #e3f4e8;
   color: var(--sv-ink);
   border-top: 1px solid var(--sv-line);
+}
+
+.resumen-pedido {
+  top: 90px;
+  z-index: 1;
 }
 
 .site-footer h5,

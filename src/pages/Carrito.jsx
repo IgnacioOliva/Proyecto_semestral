@@ -141,7 +141,7 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
         </div>
 
         <div className="col-12 col-lg-4">
-          <div className="card shadow-sm border-0 p-4 bg-white sticky-top" style={{ top: '90px' }}>
+          <div className="card shadow-sm border-0 p-4 bg-white sticky-top resumen-pedido">
             <h5 className="fw-bold mb-3">Resumen de Pedido</h5>
 
             <div className="mb-3">
