@@ -13,13 +13,21 @@ export default function MapaTienda() {
         <div className="col-12 col-lg-7">
           <div className="bg-light p-4 text-center d-flex flex-column align-items-center justify-content-center h-100 min-vh-300">
             <i className="bi bi-map display-2 text-primary mb-2"></i>
+<<<<<<< HEAD
             <h6 className="fw-bold text-dark">Mapa Interactivo</h6>
+=======
+            <h6 className="fw-bold text-dark">Mapa Interactivo - Viña del Mar</h6>
+>>>>>>> 5974a65 (Correccion imagenes de productos)
             <p className="text-muted small mb-3">
               Muestra la ubicación céntrica de Sonido Vivo y los puntos de entrega asociados en la V Región.
             </p>
             <div className="alert alerta-suave py-2 px-3 small mb-0">
               <i className="bi bi-info-circle me-1"></i>
+<<<<<<< HEAD
               Integración con Google Maps proximamente
+=======
+              Integración preparada para API de Google Maps / Leaflet (Parcial 3)
+>>>>>>> 5974a65 (Correccion imagenes de productos)
             </div>
           </div>
         </div>

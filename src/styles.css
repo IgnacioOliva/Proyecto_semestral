@@ -51,7 +51,10 @@ h6,
 .site-header {
   background: var(--sv-header);
   border-bottom: 1px solid var(--sv-line);
+<<<<<<< HEAD
   z-index: 1030;
+=======
+>>>>>>> 5974a65 (Correccion imagenes de productos)
 }
 
 .site-header .navbar-brand,
@@ -118,18 +121,24 @@ h6,
 }
 
 .site-footer {
+<<<<<<< HEAD
   position: relative;
   z-index: 1020;
+=======
+>>>>>>> 5974a65 (Correccion imagenes de productos)
   background: #e3f4e8;
   color: var(--sv-ink);
   border-top: 1px solid var(--sv-line);
 }
 
+<<<<<<< HEAD
 .resumen-pedido {
   top: 90px;
   z-index: 1;
 }
 
+=======
+>>>>>>> 5974a65 (Correccion imagenes de productos)
 .site-footer h5,
 .site-footer h6,
 .site-footer .marca {

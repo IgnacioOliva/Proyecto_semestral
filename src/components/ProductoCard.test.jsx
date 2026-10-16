@@ -12,7 +12,7 @@ const producto = {
   stock: 8,
   precio: 129990,
   descripcion: "Tapa de abeto, aros y fondo de meranti. Ideal para iniciantes.",
-  imagen: "/images/productos/guitarra-acustica-folk.svg",
+  imagen: "/images/productos/guitarra-acustica-folk.png",
 };
 
 describe("ProductoCard", () => {
