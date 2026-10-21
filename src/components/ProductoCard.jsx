@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function TarjetaProducto({ producto, onAgregar }) {
+export default function TarjetaProducto({ producto, onAgregar, cantidadEnCarrito = 0 }) {
   const {
     codigo,
     nombre,
@@ -13,19 +13,23 @@ export default function TarjetaProducto({ producto, onAgregar }) {
     imagen,
   } = producto;
 
+  const stockVisible = Math.max(0, stock - cantidadEnCarrito);
+  const agotado = stock === 0;
+  const alMaximo = !agotado && stockVisible === 0;
+
   return (
     <div className="col-12 col-md-6 col-lg-4 col-xl-3">
       <div className="card h-100 shadow-sm border-0 producto-card position-relative">
         <span
           className={`position-absolute top-0 end-0 m-2 badge ${
-            stock > 3
-              ? "bg-success"
-              : stock > 0
-                ? "bg-warning text-dark"
-                : "bg-danger"
+            agotado || alMaximo
+              ? "bg-danger"
+              : stockVisible > 3
+                ? "bg-success"
+                : "bg-warning text-dark"
           }`}
         >
-          {stock > 0 ? `Stock: ${stock}` : "Agotado"}
+          {agotado ? "Agotado" : alMaximo ? "En carrito" : `Stock: ${stockVisible}`}
         </span>
 
         <div className="card-img-top-container">
@@ -61,9 +65,10 @@ export default function TarjetaProducto({ producto, onAgregar }) {
             <button
               className="btn btn-sv btn-sm rounded-pill px-3"
               onClick={() => onAgregar(producto)}
-              disabled={stock === 0}
+              disabled={stockVisible === 0}
             >
-              <i className="bi bi-cart-plus me-1"></i> Agregar
+              <i className="bi bi-cart-plus me-1"></i>
+              {agotado ? "Agotado" : alMaximo ? "Máximo" : "Agregar"}
             </button>
           </div>
         </div>

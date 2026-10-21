@@ -11,7 +11,10 @@ export default function MapaTienda() {
       </div>
       <div className="row g-0">
         <div className="col-12 col-lg-7">
-          <div className="bg-light p-4 text-center d-flex flex-column align-items-center justify-content-center h-100 min-vh-300">
+          <div
+            className="bg-light p-4 text-center d-flex flex-column align-items-center justify-content-center h-100"
+            style={{ minHeight: "300px" }}
+          >
             <i className="bi bi-map display-2 text-primary mb-2"></i>
             <h6 className="fw-bold text-dark">Mapa Interactivo</h6>
             <p className="text-muted small mb-3">
@@ -19,7 +22,7 @@ export default function MapaTienda() {
             </p>
             <div className="alert alerta-suave py-2 px-3 small mb-0">
               <i className="bi bi-info-circle me-1"></i>
-              Integración con Google Maps proximamente
+              Integración con Google Maps próximamente
             </div>
           </div>
         </div>
@@ -41,7 +44,7 @@ export default function MapaTienda() {
             </li>
             <li className="list-group-item px-0 text-secondary">
               <i className="bi bi-check-circle-fill text-success me-2"></i>
-              Código de seguimiento automático registrado en tu pedido.
+              El despacho se coordina por Starken o Chilexpress al confirmar el pedido.
             </li>
           </ul>
         </div>

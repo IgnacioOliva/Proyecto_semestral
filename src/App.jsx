@@ -58,6 +58,29 @@ export default function App() {
     setCarrito([]);
   };
 
+  const registrarPedido = (pedido) => {
+    setProductos((actual) =>
+      actual.map((producto) => {
+        const linea = pedido.items.find((item) => item.id === producto.id);
+        if (!linea) return producto;
+        return {
+          ...producto,
+          stock: Math.max(0, producto.stock - linea.cantidad),
+        };
+      }),
+    );
+
+    const clave = "pedidosSonidoVivo";
+    let anteriores = [];
+    try {
+      const guardado = JSON.parse(localStorage.getItem(clave) || "[]");
+      if (Array.isArray(guardado)) anteriores = guardado;
+    } catch {
+      anteriores = [];
+    }
+    localStorage.setItem(clave, JSON.stringify([...anteriores, pedido]));
+  };
+
   const actualizarStock = (id, nuevoStock) => {
     const stockSeguro = Math.max(0, Number(nuevoStock) || 0);
 
@@ -97,13 +120,18 @@ export default function App() {
               <Inicio
                 productosDestacados={productos}
                 onAgregar={agregarAlCarrito}
+                carrito={carrito}
               />
             }
           />
           <Route
             path="/catalogo"
             element={
-              <CatalogoPage productos={productos} onAgregar={agregarAlCarrito} />
+              <CatalogoPage
+                productos={productos}
+                onAgregar={agregarAlCarrito}
+                carrito={carrito}
+              />
             }
           />
           <Route
@@ -115,6 +143,7 @@ export default function App() {
                 onEliminar={eliminarDelCarrito}
                 onActualizarCantidad={actualizarCantidad}
                 onVaciarCarrito={vaciarCarrito}
+                onRegistrarPedido={registrarPedido}
               />
             }
           />

@@ -11,7 +11,17 @@ export function iniciarSesion(usuario, password) {
 }
 
 export function obtenerSesion() {
-  return JSON.parse(localStorage.getItem(CLAVE_SESION));
+  try {
+    const guardado = localStorage.getItem(CLAVE_SESION);
+    if (!guardado) return null;
+
+    const sesion = JSON.parse(guardado);
+    if (!sesion || typeof sesion !== "object") return null;
+    return sesion;
+  } catch {
+    localStorage.removeItem(CLAVE_SESION);
+    return null;
+  }
 }
 
 export function cerrarSesion() {

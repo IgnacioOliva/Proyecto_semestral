@@ -1,16 +1,46 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function CarritoPage({ carrito, total, onEliminar, onActualizarCantidad, onVaciarCarrito }) {
+export default function CarritoPage({
+  carrito,
+  total,
+  onEliminar,
+  onActualizarCantidad,
+  onVaciarCarrito,
+  onRegistrarPedido,
+}) {
   const [tipoEntrega, setTipoEntrega] = useState('retiro');
   const [pedidoConfirmado, setPedidoConfirmado] = useState(false);
+  const [numeroPedido, setNumeroPedido] = useState(null);
+  const [cliente, setCliente] = useState({ nombre: '', correo: '', telefono: '' });
 
   const costoEnvio = tipoEntrega === 'despacho' ? 4990 : 0;
   const totalFinal = total + costoEnvio;
 
+  const actualizarCliente = (campo) => (event) => {
+    setCliente((actual) => ({ ...actual, [campo]: event.target.value }));
+  };
+
   const handleConfirmar = (e) => {
     e.preventDefault();
+    const numero = Math.floor(100000 + Math.random() * 900000);
+    setNumeroPedido(numero);
     setPedidoConfirmado(true);
+    onRegistrarPedido?.({
+      numero,
+      nombre: cliente.nombre.trim(),
+      correo: cliente.correo.trim(),
+      telefono: cliente.telefono.trim(),
+      tipoEntrega,
+      items: carrito.map((item) => ({
+        id: item.id,
+        codigo: item.codigo,
+        nombre: item.nombre,
+        cantidad: item.cantidad,
+        precio: item.precio,
+      })),
+      total: totalFinal,
+    });
     onVaciarCarrito();
   };
 
@@ -24,7 +54,8 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
             Hemos registrado tu solicitud para <strong>Sonido Vivo</strong>. Un ejecutivo verificará el stock y te contactará a la brevedad.
           </p>
           <div className="alert alert-light border text-start mb-4 small">
-            <p className="mb-1"><strong>Número de Pedido:</strong> #SV-{Math.floor(100000 + Math.random() * 900000)}</p>
+            <p className="mb-1"><strong>Número de Pedido:</strong> #SV-{numeroPedido}</p>
+            <p className="mb-1"><strong>Cliente:</strong> {cliente.nombre}</p>
             <p className="mb-1"><strong>Modalidad:</strong> {tipoEntrega === 'retiro' ? 'Retiro en Tienda (Arlegui #450, Viña del Mar)' : 'Despacho por Starken/Chilexpress'}</p>
             <p className="mb-0"><strong>Estado:</strong> En Preparación</p>
           </div>
@@ -200,18 +231,24 @@ export default function CarritoPage({ carrito, total, onEliminar, onActualizarCa
                   type="text" 
                   className="form-control form-control-sm mb-2" 
                   placeholder="Nombre y Apellido *" 
+                  value={cliente.nombre}
+                  onChange={actualizarCliente('nombre')}
                   required 
                 />
                 <input 
                   type="email" 
                   className="form-control form-control-sm mb-2" 
                   placeholder="Correo Electrónico *" 
+                  value={cliente.correo}
+                  onChange={actualizarCliente('correo')}
                   required 
                 />
                 <input 
                   type="tel" 
                   className="form-control form-control-sm" 
                   placeholder="Teléfono / WhatsApp *" 
+                  value={cliente.telefono}
+                  onChange={actualizarCliente('telefono')}
                   required 
                 />
               </div>

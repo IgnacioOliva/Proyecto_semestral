@@ -1,7 +1,7 @@
 import React from 'react';
 import TarjetaProducto from './ProductoCard.jsx';
 
-export default function ListaProductos({ productos, onAgregar }) {
+export default function ListaProductos({ productos, onAgregar, carrito = [] }) {
   if (productos.length === 0) {
     return (
       <div className="text-center py-5 my-4 bg-white rounded shadow-sm p-4">
@@ -15,7 +15,14 @@ export default function ListaProductos({ productos, onAgregar }) {
   return (
     <div className="row g-4">
       {productos.map((producto) => (
-        <TarjetaProducto key={producto.id} producto={producto} onAgregar={onAgregar} />
+        <TarjetaProducto
+          key={producto.id}
+          producto={producto}
+          onAgregar={onAgregar}
+          cantidadEnCarrito={
+            carrito.find((item) => item.id === producto.id)?.cantidad ?? 0
+          }
+        />
       ))}
     </div>
   );

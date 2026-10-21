@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -41,13 +42,13 @@ export default function Footer() {
           </div>
 
           <div className="col-12 col-md-4">
-            <h6 className="fw-bold mb-3">Tu puedes ser parte de nosotros</h6>
+            <h6 className="fw-bold mb-3">Tú puedes ser parte de nosotros</h6>
             <p className="small">
               Estamos buscando nuevos talentos para unirse a nuestro equipo. Si te interesa, puedes contactarnos a través de nuestro formulario de contacto.
             </p>
-            <a href="https://www.google.com" className="btn btn-primary">
+            <Link to="/contacto" className="btn btn-primary">
               <i className="bi bi-person-plus me-2"></i> Contactar
-            </a>
+            </Link>
           </div>
         </div>
 

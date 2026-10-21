@@ -147,7 +147,7 @@ export const productos = [
     id: 13,
     codigo: "BA003",
     nombre: "Bajo Acústico 4 Cuerdas",
-    categoria: "Bajos Eléctricos",
+    categoria: "Bajos Acústicos",
     marca: "Yamaha",
     modelo: "APX700II",
     stock: 2,
@@ -308,7 +308,7 @@ export const productos = [
     modelo: "Loudbox Mini",
     stock: 2,
     precio: 439990,
-    descripcion: "60W, 2 canales, reverb y chorus incorporados.",
+    descripcion: "40W, 2 canales, reverb y chorus incorporados.",
     imagen: "/images/productos/amplificador-acustico-40w.png",
   },
   {

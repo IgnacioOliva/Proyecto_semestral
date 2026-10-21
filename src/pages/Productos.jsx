@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import Buscador from "../components/Buscador";
 import ListaProductos from "../components/ListaProductos";
 
-export default function CatalogoPage({ productos, onAgregar }) {
+export default function CatalogoPage({ productos, onAgregar, carrito = [] }) {
   const [busqueda, setBusqueda] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
@@ -27,6 +27,11 @@ export default function CatalogoPage({ productos, onAgregar }) {
     });
   }, [productos, busqueda, categoriaSeleccionada]);
 
+  const conStock = productosFiltrados.filter((producto) => {
+    const reservada = carrito.find((item) => item.id === producto.id)?.cantidad ?? 0;
+    return producto.stock - reservada > 0;
+  }).length;
+
   return (
     <div className="container py-4">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
@@ -38,7 +43,7 @@ export default function CatalogoPage({ productos, onAgregar }) {
         </div>
         <div className="mt-2 mt-md-0">
           <span className="badge badge-suave fs-6 px-3 py-2">
-            {productosFiltrados.length} productos disponibles
+            {conStock} productos con stock
           </span>
         </div>
       </div>
@@ -51,7 +56,11 @@ export default function CatalogoPage({ productos, onAgregar }) {
         categorias={categorias}
       />
 
-      <ListaProductos productos={productosFiltrados} onAgregar={onAgregar} />
+      <ListaProductos
+        productos={productosFiltrados}
+        onAgregar={onAgregar}
+        carrito={carrito}
+      />
     </div>
   );
 }

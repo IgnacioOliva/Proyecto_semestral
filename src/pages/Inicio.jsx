@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import ListaProductos from "../components/ListaProductos.jsx";
 
-export default function Inicio({ productosDestacados = [], onAgregar }) {
+export default function Inicio({ productosDestacados = [], onAgregar, carrito = [] }) {
   const destacados = productosDestacados
-    .filter((producto) => producto.stock > 0)
+    .filter((producto) => {
+      const reservada = carrito.find((item) => item.id === producto.id)?.cantidad ?? 0;
+      return producto.stock - reservada > 0;
+    })
     .slice(0, 8);
 
   return (
@@ -17,8 +20,8 @@ export default function Inicio({ productosDestacados = [], onAgregar }) {
                 Instrumentos, audio e iluminación profesional
               </h1>
               <p className="lead mb-4">
-                Descuentos de hasta un 60% en guitarras y bajos. Retiro en tienda
-                o despacho a todo Chile.
+                Guitarras, bajos y audio profesional. Retiro en tienda o despacho
+                a todo Chile.
               </p>
               <div className="d-flex flex-wrap gap-2">
                 <Link to="/catalogo" className="btn btn-sv px-4">
@@ -65,7 +68,7 @@ export default function Inicio({ productosDestacados = [], onAgregar }) {
           </Link>
         </div>
 
-        <ListaProductos productos={destacados} onAgregar={onAgregar} />
+        <ListaProductos productos={destacados} onAgregar={onAgregar} carrito={carrito} />
       </section>
     </>
   );
