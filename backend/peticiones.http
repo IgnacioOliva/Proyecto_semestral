@@ -1,0 +1,32 @@
+### Listar Productos
+GET http://localhost:8080/api/Productos
+
+### Registrar Producto
+POST http://localhost:8080/api/Productos
+Content-Type: application/json
+
+{
+  "nombre": "Rocky",
+  "especie": "Perro",
+  "raza": "Labrador",
+  "edad": 3,
+  "nombreDueno": "Carlos Pérez"
+}
+
+### Consultar por ID (ajustar según ID generado)
+GET http://localhost:8080/api/Productos/1
+
+### Actualizar
+PUT http://localhost:8080/api/Productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Rocky",
+  "especie": "Perro",
+  "raza": "Labrador",
+  "edad": 4,
+  "nombreDueno": "Carlos Pérez"
+}
+
+### Eliminar
+DELETE http://localhost:8080/api/Productos/1

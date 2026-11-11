@@ -1,0 +1,30 @@
+CORRECCIÓN DSY1104 S13 - JDBC XAMPP
+
+ERROR RESUELTO DE CONFIGURACION:
+  Cannot load driver class: org.mariadb.jdbc.Driver
+
+CAUSA:
+  La dependencia org.mariadb.jdbc:mariadb-java-client estaba bajo el
+  perfil Maven -Pmysql. Cuando se activaba sólo el perfil de Spring
+  (spring-boot.run.profiles=mysql), se cargaba application-mysql.properties
+  pero faltaba el JAR del driver.
+
+CAMBIO:
+  Se dejó el driver MariaDB en <dependencies> con <scope>runtime</scope>
+  y se quitó el perfil Maven -Pmysql. Se conservan H2 y todas las clases Java.
+
+REQUISITOS PREVIOS:
+  - JDK 21 y Maven instalados
+  - MySQL de XAMPP encendido, puerto 3306 (verificar el puerto real)
+  - Base doggyspa creada en phpMyAdmin
+
+COMANDO DE EJECUCIÓN CON XAMPP:
+  mvn -s .\settings-google.xml "-Dspring-boot.run.profiles=mysql" spring-boot:run
+
+COMANDO DE EJECUCIÓN CON H2:
+  mvn -s .\settings-google.xml spring-boot:run
+
+Maven descargará el driver MariaDB si no está en la caché. Si el servidor
+responde HTTP 429 y no funciona el espejo, resolver la descarga antes de ejecutar.
+Si XAMPP no está disponible o hay credenciales erróneas, aparecerá un ERROR
+DISTINTO al de driver ausente. El proyecto debe probarse en el equipo local.
