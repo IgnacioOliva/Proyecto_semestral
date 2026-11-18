@@ -16,7 +16,7 @@ CAMBIO:
 REQUISITOS PREVIOS:
   - JDK 21 y Maven instalados
   - MySQL de XAMPP encendido, puerto 3306 (verificar el puerto real)
-  - Base doggyspa creada en phpMyAdmin
+  - Base sonidovivo creada en phpMyAdmin
 
 COMANDO DE EJECUCIÓN CON XAMPP:
   mvn -s .\settings-google.xml "-Dspring-boot.run.profiles=mysql" spring-boot:run

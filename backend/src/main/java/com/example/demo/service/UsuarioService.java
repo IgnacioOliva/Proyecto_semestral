@@ -4,6 +4,7 @@ import com.example.demo.model.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 @Service
 public class UsuarioService {
     private final UsuarioRepository repository;
+    private final PasswordEncoder encoder;
 
-    public UsuarioService(UsuarioRepository repository) {
+    public UsuarioService(UsuarioRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     public List<Usuario> listar() {
@@ -33,7 +36,7 @@ public class UsuarioService {
         Usuario actual = repository.findByUsuario(usuario.trim()).orElseThrow(() ->
             new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales incorrectas"));
 
-        if (!password.equals(actual.getPassword())) {
+        if (!encoder.matches(password, actual.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Credenciales incorrectas");
         }
         return actual;
@@ -42,6 +45,7 @@ public class UsuarioService {
     public Usuario crear(Usuario usuario) {
         usuario.setId(null);
         usuario.setUsuario(usuario.getUsuario().trim());
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
         try {
             return repository.save(usuario);
         } catch (DataIntegrityViolationException ex) {
@@ -52,7 +56,7 @@ public class UsuarioService {
     public Usuario actualizar(Long id, Usuario cambios) {
         Usuario actual = buscar(id);
         actual.setUsuario(cambios.getUsuario().trim());
-        actual.setPassword(cambios.getPassword());
+        actual.setPassword(encoder.encode(cambios.getPassword()));
         actual.setRol(cambios.getRol());
         try {
             return repository.save(actual);

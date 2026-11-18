@@ -22,11 +22,6 @@ public class UsuarioController {
         return service.listar();
     }
 
-    @PostMapping("/login")
-    public Usuario login(@RequestBody Usuario credenciales) {
-        return service.iniciarSesion(credenciales.getUsuario(), credenciales.getPassword());
-    }
-
     @GetMapping("/{id}")
     public Usuario buscar(@PathVariable Long id) {
         return service.buscar(id);

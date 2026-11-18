@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { iniciarSesion } from "../auth/auth.js";
 
 /**
- * Antes (Tutorial 02): Login era solo un formulario visual.
- * Ahora captura los datos y llama a auth.js.
- * Si las credenciales son válidas, cambia a /admin.
+ * El formulario envía usuario y contraseña a /auth/login.
+ * Si el backend entrega un token, entra a /admin.
  */
 export default function Login() {
   const [usuario, setUsuario] = useState("");
@@ -13,7 +12,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  function ingresar(event) {
+  async function ingresar(event) {
     event.preventDefault();
     setError("");
 
@@ -22,8 +21,14 @@ export default function Login() {
       return;
     }
 
-    if (!iniciarSesion(usuario.trim(), password)) {
-      setError("Credenciales incorrectas.");
+    try {
+      const ok = await iniciarSesion(usuario.trim(), password);
+      if (!ok) {
+        setError("Credenciales incorrectas.");
+        return;
+      }
+    } catch {
+      setError("No se pudo conectar con el servidor.");
       return;
     }
 
@@ -34,7 +39,7 @@ export default function Login() {
     <section className="form-card">
       <h2>Login administrador</h2>
       <p>
-        Credenciales de prueba: <strong>admin / admin123</strong>
+        Ingresa con el administrador de Sonido Vivo: <strong>admin / admin123</strong>
       </p>
 
       <form onSubmit={ingresar} noValidate>

@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login.jsx";
 
@@ -15,6 +15,14 @@ function renderLogin() {
 }
 
 describe("Login", () => {
+  beforeEach(() => {
+    vi.stubGlobal("fetch", vi.fn());
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
   it("muestra error cuando los campos están vacíos", () => {
     renderLogin();
 
@@ -23,9 +31,11 @@ describe("Login", () => {
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Debe completar usuario y contraseña.",
     );
+    expect(fetch).not.toHaveBeenCalled();
   });
 
-  it("muestra error para credenciales incorrectas", () => {
+  it("muestra error para credenciales incorrectas", async () => {
+    fetch.mockResolvedValue({ ok: false, status: 401 });
     renderLogin();
 
     fireEvent.change(screen.getByLabelText("Usuario"), {
@@ -36,10 +46,19 @@ describe("Login", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
 
-    expect(screen.getByRole("alert")).toHaveTextContent("Credenciales incorrectas.");
+    expect(await screen.findByRole("alert")).toHaveTextContent("Credenciales incorrectas.");
   });
 
-  it("guarda sesión y navega a admin con credenciales válidas", () => {
+  it("guarda sesión y navega a admin con credenciales válidas", async () => {
+    fetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        token: "token-demo",
+        usuario: "admin",
+        rol: "ADMIN",
+        tipo: "Bearer",
+      }),
+    });
     renderLogin();
 
     fireEvent.change(screen.getByLabelText("Usuario"), {
@@ -50,11 +69,13 @@ describe("Login", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
 
-    expect(screen.getByRole("heading", { name: "Panel de prueba" })).toBeInTheDocument();
-
-    expect(JSON.parse(localStorage.getItem("usuarioActual"))).toEqual({
-      usuario: "admin",
-      rol: "ADMIN",
+    expect(await screen.findByRole("heading", { name: "Panel de prueba" })).toBeInTheDocument();
+    await waitFor(() => {
+      expect(JSON.parse(localStorage.getItem("usuarioActual"))).toEqual({
+        usuario: "admin",
+        rol: "ADMIN",
+        token: "token-demo",
+      });
     });
   });
 });
