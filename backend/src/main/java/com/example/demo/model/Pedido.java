@@ -1,13 +1,21 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Min;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pedido {
@@ -15,33 +23,39 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El número es obligatorio")
+    @Column(nullable = false, unique = true)
     private String numero;
-    
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
-    @NotBlank(message = "El correo es obligatorio") 
+    @NotBlank(message = "El correo es obligatorio")
     private String correo;
-    
+
     @NotBlank(message = "El teléfono es obligatorio")
     private String telefono;
 
+    @NotBlank(message = "El tipo de entrega es obligatorio")
+    @Pattern(regexp = "retiro|despacho", message = "El tipo de entrega debe ser retiro o despacho")
     private String tipoEntrega;
 
-    @NotNull(message = "El costo de envío es obligatorio")
-    @Min(value = 0, message = "El costo de envío no puede ser negativo")
+    @Column(nullable = false)
     private Integer costoEnvio;
 
-    @NotNull(message = "El total es obligatorio")
-    @Min(value = 0, message = "El total no puede ser negativo")
+    @Column(nullable = false)
     private Integer total;
 
-    @NotBlank(message = "El estado es obligatorio")
+    @Column(nullable = false)
     private String estado;
 
-    @NotNull(message = "La fecha es obligatoria")   
-    private String fecha;
+    @Column(nullable = false)
+    private LocalDateTime fecha;
+
+    @NotNull(message = "El pedido debe incluir productos")
+    @Size(min = 1, message = "El pedido debe incluir al menos un producto")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<@Valid DetallePedido> detalles = new ArrayList<>();
 
     public Pedido() { }
 
@@ -63,7 +77,10 @@ public class Pedido {
     public void setTotal(Integer total) { this.total = total; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-    public String getFecha() { return fecha; }
-    public void setFecha(String fecha) { this.fecha = fecha; }
-
+    public LocalDateTime getFecha() { return fecha; }
+    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
+    public List<DetallePedido> getDetalles() { return detalles; }
+    public void setDetalles(List<DetallePedido> detalles) {
+        this.detalles = detalles == null ? new ArrayList<>() : detalles;
+    }
 }

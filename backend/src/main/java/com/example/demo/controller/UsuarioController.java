@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Productos")
+@RequestMapping("/api/Usuarios")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
     private final UsuarioService service;
@@ -17,24 +17,35 @@ public class UsuarioController {
         this.service = service;
     }
 
+    @GetMapping
     public List<Usuario> listar() {
         return service.listar();
     }
 
+    @PostMapping("/login")
+    public Usuario login(@RequestBody Usuario credenciales) {
+        return service.iniciarSesion(credenciales.getUsuario(), credenciales.getPassword());
+    }
+
+    @GetMapping("/{id}")
     public Usuario buscar(@PathVariable Long id) {
         return service.buscar(id);
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Usuario crear(@Valid @RequestBody Usuario usuario) {
         return service.crear(usuario);
     }
 
+    @PutMapping("/{id}")
     public Usuario actualizar(@PathVariable Long id, @Valid @RequestBody Usuario cambios) {
         return service.actualizar(id, cambios);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) {
         service.eliminar(id);
     }
-    
 }

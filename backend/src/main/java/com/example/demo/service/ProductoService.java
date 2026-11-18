@@ -31,6 +31,7 @@ public class ProductoService {
 
     public Producto actualizar(Long id, Producto cambios) {
         Producto actual = buscar(id);
+        actual.setCodigo(cambios.getCodigo());
         actual.setNombre(cambios.getNombre());
         actual.setCategoria(cambios.getCategoria());
         actual.setMarca(cambios.getMarca());
@@ -38,6 +39,7 @@ public class ProductoService {
         actual.setStock(cambios.getStock());
         actual.setPrecio(cambios.getPrecio());
         actual.setDescripcion(cambios.getDescripcion());
+        actual.setImagen(cambios.getImagen());
         return repository.save(actual);
     }
 

@@ -34,7 +34,7 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public Pedido actualizar(@PathVariable Long id, @Valid @RequestBody Pedido cambios) {
+    public Pedido actualizar(@PathVariable Long id, @RequestBody Pedido cambios) {
         return service.actualizar(id, cambios);
     }
 

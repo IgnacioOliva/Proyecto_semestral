@@ -42,6 +42,9 @@ public class Producto {
     @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
+    @NotBlank(message = "La imagen es obligatoria")
+    private String imagen;
+
     public Producto() { }
 
     public Long getId() { return id; }
@@ -62,6 +65,6 @@ public class Producto {
     public void setPrecio(Integer precio) { this.precio = precio; }
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getImagen() { return imagen; }
+    public void setImagen(String imagen) { this.imagen = imagen; }
 }
-
-

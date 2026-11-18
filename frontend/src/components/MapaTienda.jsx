@@ -1,5 +1,14 @@
 import React from 'react';
 
+const LATITUD = -33.0245;
+const LONGITUD = -71.5518;
+const oeste = (LONGITUD - 0.01).toFixed(4);
+const sur = (LATITUD - 0.01).toFixed(4);
+const este = (LONGITUD + 0.01).toFixed(4);
+const norte = (LATITUD + 0.01).toFixed(4);
+const MAPA_EMBED = `https://www.openstreetmap.org/export/embed.html?bbox=${oeste}%2C${sur}%2C${este}%2C${norte}&layer=mapnik&marker=${LATITUD}%2C${LONGITUD}`;
+const MAPA_ENLACE = `https://www.openstreetmap.org/?mlat=${LATITUD}&mlon=${LONGITUD}#map=17/${LATITUD}/${LONGITUD}`;
+
 export default function MapaTienda() {
   return (
     <div className="card shadow-sm border-0 overflow-hidden mb-4">
@@ -11,20 +20,13 @@ export default function MapaTienda() {
       </div>
       <div className="row g-0">
         <div className="col-12 col-lg-7">
-          <div
-            className="bg-light p-4 text-center d-flex flex-column align-items-center justify-content-center h-100"
-            style={{ minHeight: "300px" }}
-          >
-            <i className="bi bi-map display-2 text-primary mb-2"></i>
-            <h6 className="fw-bold text-dark">Mapa Interactivo</h6>
-            <p className="text-muted small mb-3">
-              Muestra la ubicación céntrica de Sonido Vivo y los puntos de entrega asociados en la V Región.
-            </p>
-            <div className="alert alerta-suave py-2 px-3 small mb-0">
-              <i className="bi bi-info-circle me-1"></i>
-              Integración con Google Maps próximamente
-            </div>
-          </div>
+          <iframe
+            title="Mapa de Sonido Vivo en Calle Arlegui 450, Viña del Mar"
+            src={MAPA_EMBED}
+            className="w-100 border-0"
+            style={{ minHeight: "300px", height: "100%" }}
+            loading="lazy"
+          />
         </div>
 
         <div className="col-12 col-lg-5 p-4 bg-white">
@@ -35,6 +37,15 @@ export default function MapaTienda() {
           <p className="text-secondary small mb-3">
             <strong>Punto de Retiro:</strong> Retiro inmediato en mesón previa confirmación de pedido online.
           </p>
+          <a
+            href={MAPA_ENLACE}
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-outline-primary btn-sm mb-3"
+          >
+            <i className="bi bi-box-arrow-up-right me-1"></i>
+            Abrir ubicación en el mapa
+          </a>
 
           <h6 className="fw-bold text-dark mb-2">Despachos a Regiones</h6>
           <ul className="list-group list-group-flush small mb-3">
