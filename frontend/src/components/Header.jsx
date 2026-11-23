@@ -1,0 +1,114 @@
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.jsx";
+
+export default function Header({ cantidadCarrito }) {
+  const { session, logout } = useAuth();
+  return (
+    <header className="site-header sticky-top shadow-sm">
+      <nav className="navbar navbar-expand-md container">
+        <Link
+          className="navbar-brand d-flex align-items-center fw-bold fs-4"
+          to="/"
+        >
+          <i className="bi bi-music-note-beamed me-2"></i>
+          <span>Sonido Vivo</span>
+        </Link>
+
+        <button
+          className="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSonidoVivo"
+          aria-controls="navbarSonidoVivo"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarSonidoVivo">
+          <ul className="navbar-nav me-auto mb-2 mb-md-0 mt-2 mt-md-0">
+            <li className="nav-item">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
+                }
+                end
+              >
+                <i className="bi bi-house-door me-1"></i> Inicio
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/catalogo"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
+                }
+              >
+                <i className="bi bi-grid-3x3-gap me-1"></i> Catálogo
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/ubicacion"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
+                }
+              >
+                <i className="bi bi-geo-alt me-1"></i> Tienda Viña
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/contacto"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active fw-bold" : ""}`
+                }
+              >
+                <i className="bi bi-envelope me-1"></i> Contacto
+              </NavLink>
+            </li>
+            {session?.role === "ADMIN" && (
+              <li className="nav-item">
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active fw-bold" : ""}`
+                  }
+                >
+                  <i className="bi bi-shield-lock me-1"></i> Gestión Stock
+                </NavLink>
+              </li>
+            )}
+          </ul>
+
+          <div className="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            {session ? (
+              <button className="btn btn-outline-danger btn-sm" type="button" onClick={() => logout()}>
+                Cerrar sesión
+              </button>
+            ) : (
+              <Link to="/login" className="btn btn-sv-outline btn-sm">
+                Login
+              </Link>
+            )}
+            <Link
+              to="/carrito"
+              className="btn btn-sv-outline position-relative w-100 w-md-auto"
+            >
+              <i className="bi bi-cart3 me-1"></i> Carrito
+              {cantidadCarrito > 0 && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {cantidadCarrito}
+                  <span className="visually-hidden">productos en carrito</span>
+                </span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </header>
+  );
+}
