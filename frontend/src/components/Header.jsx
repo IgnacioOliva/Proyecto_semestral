@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.jsx";
 
 export default function Header({ cantidadCarrito }) {
+  const { session, logout } = useAuth();
   return (
     <header className="site-header sticky-top shadow-sm">
       <nav className="navbar navbar-expand-md container">
@@ -68,19 +70,30 @@ export default function Header({ cantidadCarrito }) {
                 <i className="bi bi-envelope me-1"></i> Contacto
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                to="/admin"
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "active fw-bold" : ""}`
-                }
-              >
-                <i className="bi bi-shield-lock me-1"></i> Gestión Stock
-              </NavLink>
-            </li>
+            {session?.role === "ADMIN" && (
+              <li className="nav-item">
+                <NavLink
+                  to="/admin"
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "active fw-bold" : ""}`
+                  }
+                >
+                  <i className="bi bi-shield-lock me-1"></i> Gestión Stock
+                </NavLink>
+              </li>
+            )}
           </ul>
 
-          <div className="d-flex align-items-center mt-2 mt-md-0">
+          <div className="d-flex align-items-center gap-2 mt-2 mt-md-0">
+            {session ? (
+              <button className="btn btn-outline-danger btn-sm" type="button" onClick={() => logout()}>
+                Cerrar sesión
+              </button>
+            ) : (
+              <Link to="/login" className="btn btn-sv-outline btn-sm">
+                Login
+              </Link>
+            )}
             <Link
               to="/carrito"
               className="btn btn-sv-outline position-relative w-100 w-md-auto"

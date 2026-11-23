@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ListaProductos from "../components/ListaProductos.jsx";
 
-export default function Inicio({ productosDestacados = [], onAgregar, carrito = [] }) {
+export default function Inicio({ productosDestacados = [], onAgregar, carrito = [], autenticado = false }) {
   const destacados = productosDestacados
     .filter((producto) => {
       const reservada = carrito.find((item) => item.id === producto.id)?.cantidad ?? 0;
@@ -68,7 +68,13 @@ export default function Inicio({ productosDestacados = [], onAgregar, carrito = 
           </Link>
         </div>
 
-        <ListaProductos productos={destacados} onAgregar={onAgregar} carrito={carrito} />
+        {autenticado ? (
+          <ListaProductos productos={destacados} onAgregar={onAgregar} carrito={carrito} />
+        ) : (
+          <p className="text-muted">
+            Inicia sesión para ver el catálogo. Consulta con <strong>usuario / usuario123</strong> o administra con <strong>admin / admin123</strong>.
+          </p>
+        )}
       </section>
     </>
   );

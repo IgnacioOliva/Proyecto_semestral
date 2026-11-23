@@ -1,12 +1,37 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { cerrarSesion, obtenerSesion } from "../auth/auth.js";
+import { useAuth } from "../auth/AuthContext.jsx";
+
+function StockInput({ producto, onActualizarStock }) {
+  const [valor, setValor] = useState(producto.stock);
+
+  useEffect(() => {
+    setValor(producto.stock);
+  }, [producto.stock]);
+
+  return (
+    <input
+      type="number"
+      min="0"
+      className="form-control form-control-sm"
+      value={valor}
+      onChange={(event) => setValor(event.target.value)}
+      onBlur={() => {
+        if (Number(valor) !== Number(producto.stock)) {
+          onActualizarStock(producto.id, valor);
+        }
+      }}
+      aria-label={`Stock de ${producto.nombre}`}
+    />
+  );
+}
 
 export default function AdminPage({ productos, onActualizarStock }) {
   const navigate = useNavigate();
-  const sesion = obtenerSesion();
+  const { session, logout } = useAuth();
 
   function salir() {
-    cerrarSesion();
+    logout();
     navigate("/login");
   }
 
@@ -16,7 +41,7 @@ export default function AdminPage({ productos, onActualizarStock }) {
         <div>
           <h2 className="fw-bold text-dark mb-1">Gestión de Stock</h2>
           <p className="text-muted small mb-0">
-            Sesión: <strong>{sesion?.usuario}</strong> ({sesion?.rol})
+            Sesión: <strong>{session?.username}</strong> ({session?.role})
           </p>
         </div>
         <button className="btn btn-outline-danger" type="button" onClick={salir}>
@@ -56,16 +81,7 @@ export default function AdminPage({ productos, onActualizarStock }) {
                     ${producto.precio.toLocaleString("es-CL")}
                   </td>
                   <td>
-                    <input
-                      type="number"
-                      min="0"
-                      className="form-control form-control-sm"
-                      value={producto.stock}
-                      onChange={(event) =>
-                        onActualizarStock(producto.id, event.target.value)
-                      }
-                      aria-label={`Stock de ${producto.nombre}`}
-                    />
+                    <StockInput producto={producto} onActualizarStock={onActualizarStock} />
                   </td>
                 </tr>
               ))}

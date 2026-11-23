@@ -1,16 +1,19 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { iniciarSesion } from "../auth/auth.js";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.jsx";
 
-/**
- * El formulario envía usuario y contraseña a /auth/login.
- * Si el backend entrega un token, entra a /admin.
- */
 export default function Login() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const { session, login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  if (session) {
+    return <Navigate to={session.role === "ADMIN" ? "/admin" : "/catalogo"} replace />;
+  }
 
   async function ingresar(event) {
     event.preventDefault();
@@ -21,25 +24,23 @@ export default function Login() {
       return;
     }
 
+    setBusy(true);
     try {
-      const ok = await iniciarSesion(usuario.trim(), password);
-      if (!ok) {
-        setError("Credenciales incorrectas.");
-        return;
-      }
-    } catch {
-      setError("No se pudo conectar con el servidor.");
-      return;
+      const activa = await login(usuario.trim(), password);
+      const destino = location.state?.from || (activa?.role === "ADMIN" ? "/admin" : "/catalogo");
+      navigate(destino, { replace: true });
+    } catch (e) {
+      setError(e.message || "Credenciales incorrectas.");
+    } finally {
+      setBusy(false);
     }
-
-    navigate("/admin");
   }
 
   return (
     <section className="form-card">
-      <h2>Login administrador</h2>
+      <h2>Iniciar sesión</h2>
       <p>
-        Ingresa con el administrador de Sonido Vivo: <strong>admin / admin123</strong>
+        Consulta: <strong>usuario / usuario123</strong>. Administración: <strong>admin / admin123</strong>
       </p>
 
       <form onSubmit={ingresar} noValidate>
@@ -62,8 +63,8 @@ export default function Login() {
           />
         </div>
 
-        <button className="primary" type="submit">
-          Ingresar
+        <button className="primary" type="submit" disabled={busy}>
+          {busy ? "Ingresando..." : "Ingresar"}
         </button>
 
         {error && (

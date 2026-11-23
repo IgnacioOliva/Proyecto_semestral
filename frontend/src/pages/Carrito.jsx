@@ -12,7 +12,8 @@ export default function CarritoPage({
   const [tipoEntrega, setTipoEntrega] = useState('retiro');
   const [pedidoConfirmado, setPedidoConfirmado] = useState(false);
   const [numeroPedido, setNumeroPedido] = useState(null);
-  const [cliente, setCliente] = useState({ nombre: '', correo: '', telefono: '' });
+  const [errorPedido, setErrorPedido] = useState("");
+  const [cliente, setCliente] = useState({ nombre: "", correo: "", telefono: "" });
 
   const costoEnvio = tipoEntrega === 'despacho' ? 4990 : 0;
   const totalFinal = total + costoEnvio;
@@ -21,13 +22,10 @@ export default function CarritoPage({
     setCliente((actual) => ({ ...actual, [campo]: event.target.value }));
   };
 
-  const handleConfirmar = (e) => {
+  const handleConfirmar = async (e) => {
     e.preventDefault();
-    const numero = Math.floor(100000 + Math.random() * 900000);
-    setNumeroPedido(numero);
-    setPedidoConfirmado(true);
-    onRegistrarPedido?.({
-      numero,
+    setErrorPedido("");
+    const solicitud = {
       nombre: cliente.nombre.trim(),
       correo: cliente.correo.trim(),
       telefono: cliente.telefono.trim(),
@@ -40,8 +38,21 @@ export default function CarritoPage({
         precio: item.precio,
       })),
       total: totalFinal,
-    });
-    onVaciarCarrito();
+    };
+    if (!onRegistrarPedido) {
+      setNumeroPedido(null);
+      setPedidoConfirmado(true);
+      onVaciarCarrito();
+      return;
+    }
+    try {
+      const creado = await onRegistrarPedido(solicitud);
+      setNumeroPedido(creado?.numero ?? null);
+      setPedidoConfirmado(true);
+      onVaciarCarrito();
+    } catch (error) {
+      setErrorPedido(error?.message || "No se pudo registrar el pedido.");
+    }
   };
 
   if (pedidoConfirmado) {
@@ -54,7 +65,7 @@ export default function CarritoPage({
             Hemos registrado tu solicitud para <strong>Sonido Vivo</strong>. Un ejecutivo verificará el stock y te contactará a la brevedad.
           </p>
           <div className="alert alert-light border text-start mb-4 small">
-            <p className="mb-1"><strong>Número de Pedido:</strong> #SV-{numeroPedido}</p>
+            <p className="mb-1"><strong>Número de Pedido:</strong> {numeroPedido || "Registrado"}</p>
             <p className="mb-1"><strong>Cliente:</strong> {cliente.nombre}</p>
             <p className="mb-1"><strong>Modalidad:</strong> {tipoEntrega === 'retiro' ? 'Retiro en Tienda (Arlegui #450, Viña del Mar)' : 'Despacho por Starken/Chilexpress'}</p>
             <p className="mb-0"><strong>Estado:</strong> En Preparación</p>
@@ -252,6 +263,10 @@ export default function CarritoPage({
                   required 
                 />
               </div>
+
+              {errorPedido && (
+                <div className="alert alert-danger py-2 small" role="alert">{errorPedido}</div>
+              )}
 
               <button type="submit" className="btn btn-sv w-100 py-2">
                 <i className="bi bi-bag-check-fill me-2"></i>Confirmar Pedido
