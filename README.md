@@ -1,4 +1,4 @@
-# Sonido Vivo — Proyecto Semestral (DSY1104 · EP3)
+# Sonido Vivo — Proyecto Semestral
 
 Aplicación web fullstack para la tienda de instrumentos musicales, audio e iluminación **Sonido Vivo** (Arlegui #450, Viña del Mar).
 
