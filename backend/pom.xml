@@ -11,8 +11,8 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
-	<description/>
+	<name>sonidovivo-backend</name>
+	<description>API REST de la tienda de instrumentos musicales Sonido Vivo</description>
 	<url/>
 	<licenses>
 		<license/>

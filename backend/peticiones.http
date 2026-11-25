@@ -1,32 +1,110 @@
-### Listar Productos
-GET http://localhost:8080/api/Productos
+@baseUrl = http://localhost:8080
 
-### Registrar Producto
-POST http://localhost:8080/api/Productos
+### 1. Iniciar sesión como ADMIN (captura el JWT)
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "nombre": "Rocky",
-  "especie": "Perro",
-  "raza": "Labrador",
-  "edad": 3,
-  "nombreDueno": "Carlos Pérez"
+  "usuario": "admin",
+  "password": "admin123"
 }
 
-### Consultar por ID (ajustar según ID generado)
-GET http://localhost:8080/api/Productos/1
+###
+@tokenAdmin = {{loginAdmin.response.body.token}}
 
-### Actualizar
-PUT http://localhost:8080/api/Productos/1
+### 2. Iniciar sesión como USER (consulta y pedidos)
+# @name loginUser
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "nombre": "Rocky",
-  "especie": "Perro",
-  "raza": "Labrador",
-  "edad": 4,
-  "nombreDueno": "Carlos Pérez"
+  "usuario": "usuario",
+  "password": "usuario123"
 }
 
-### Eliminar
-DELETE http://localhost:8080/api/Productos/1
+###
+@tokenUser = {{loginUser.response.body.token}}
+
+### 3. Validar sesión actual (/auth/me)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{tokenAdmin}}
+
+### 4. Listar productos (ADMIN o USER)
+GET {{baseUrl}}/api/Productos
+Authorization: Bearer {{tokenUser}}
+
+### 5. Consultar producto por ID (ADMIN o USER)
+GET {{baseUrl}}/api/Productos/1
+Authorization: Bearer {{tokenUser}}
+
+### 6. Crear producto (solo ADMIN; con USER responde 403)
+# @name crearProducto
+POST {{baseUrl}}/api/Productos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "codigo": "TEST001",
+  "nombre": "Guitarra Electroacústica Demo",
+  "categoria": "Guitarras Acústicas",
+  "marca": "Yamaha",
+  "modelo": "FX310A",
+  "stock": 5,
+  "precio": 219990,
+  "descripcion": "Producto de prueba creado desde peticiones.http",
+  "imagen": "/images/placeholder-producto.svg"
+}
+
+###
+@productoCreadoId = {{crearProducto.response.body.id}}
+
+### 7. Actualizar producto y stock (solo ADMIN)
+PUT {{baseUrl}}/api/Productos/{{productoCreadoId}}
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{
+  "codigo": "TEST001",
+  "nombre": "Guitarra Electroacústica Demo",
+  "categoria": "Guitarras Acústicas",
+  "marca": "Yamaha",
+  "modelo": "FX310A",
+  "stock": 9,
+  "precio": 209990,
+  "descripcion": "Stock y precio actualizados desde peticiones.http",
+  "imagen": "/images/placeholder-producto.svg"
+}
+
+### 8. Eliminar producto de prueba (solo ADMIN)
+DELETE {{baseUrl}}/api/Productos/{{productoCreadoId}}
+Authorization: Bearer {{tokenAdmin}}
+
+### 9. Registrar un pedido con despacho (ADMIN o USER)
+# @name crearPedido
+POST {{baseUrl}}/api/Pedidos
+Authorization: Bearer {{tokenUser}}
+Content-Type: application/json
+
+{
+  "nombre": "Ana Pérez",
+  "correo": "ana@duoc.cl",
+  "telefono": "+56 9 1234 5678",
+  "tipoEntrega": "despacho",
+  "detalles": [
+    {
+      "cantidad": 1,
+      "producto": {
+        "id": 1
+      }
+    }
+  ]
+}
+
+### 10. Listar pedidos registrados (solo ADMIN)
+GET {{baseUrl}}/api/Pedidos
+Authorization: Bearer {{tokenAdmin}}
+
+### 11. Listar usuarios registrados (solo ADMIN)
+GET {{baseUrl}}/api/Usuarios
+Authorization: Bearer {{tokenAdmin}}

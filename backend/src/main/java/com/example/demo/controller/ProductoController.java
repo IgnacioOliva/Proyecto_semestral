@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/Productos")
-@CrossOrigin(origins = "http://localhost:5173") // Solo demostración local React+Vite.
 public class ProductoController {
     private final ProductoService service;
 
